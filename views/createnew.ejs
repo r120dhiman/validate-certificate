@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./Partials/header.ejs') %>
+<body>
+    <%- include('./Partials/navbar.ejs') %>
+
+    <h1>ENTER THE DETAILS HERE</h1>
+    <form action="/admin/createnew" method="POST">
+        <div class="mb-3" >
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="text" class="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="text" class="form-control" name="collegeName" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="text" class="form-control" name="position" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="text" class="form-control" name="eventName" id="exampleInputPassword1">
+        </div> 
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    <%- include('./Partials/script.ejs') %>
+</body>
+</html>
