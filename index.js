@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const validaterouter = require('./routes/validate');
 const { connection } = require('./connections/bdconnection');
@@ -5,7 +6,7 @@ const adminrouter = require('./routes/admin');
 const PORT = process.env.PORT || 3000;
 const app = express();
 //DB connection
-connection('mongodb://localhost:27017/validate');
+connection(process.env.MONGOURL);
 
 
 //middleware
