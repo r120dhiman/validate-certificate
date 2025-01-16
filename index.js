@@ -14,7 +14,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
-
 app.get('/', (req, res) => {
   return res.render('Home');
 });

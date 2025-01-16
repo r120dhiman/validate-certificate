@@ -1,17 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('./Partials/header.ejs') %>
-<body>
-    <%- include('./Partials/navbar.ejs') %>
-    <a id="download" download="qrcode.png" href="<%= src %>">
-        <img src='<%= src %>' alt="QR Code">
-    </a>
-    <script>
-        // Trigger automatic download when page loads
-        window.onload = function() {
-            document.getElementById('download').click();
-        }
-    </script>
-    <%- include('./Partials/script.ejs') %>
-</body>
+
+    <body>
+        <%- include('./Partials/navbar.ejs') %>
+            <div class="box">
+                <div class="qrcode-section">
+                    <h1>QR Code</h1>
+                    <a id="download" download="qrcode.png" href="<%= src %>">
+                        <img src='<%= src %>' alt="QR Code">
+                    </a>
+                </div>
+                <div class="actions">
+                    <a href="/admin/createnew"><button>Add New Student</button></a>
+                </div>
+            </div>
+
+            <style>
+                .box {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    height: 80vh;
+                    display:flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 20px;
+                    flex-direction: column;
+                    border-radius: 5px;
+                    margin-top: 20px;
+                }
+                .qrcode-section {
+                    margin-bottom: 20px;
+                }
+
+                .qrcode-section img {
+                    max-width: 100%;
+                    height: auto;
+                }
+
+                .actions button {
+                    padding: 10px 20px;
+                    font-size: 16px;
+                    cursor: pointer;
+                }
+            </style>
+            <script>
+                // Trigger automatic download when page loads
+                window.onload = function () {
+                    var link = document.getElementById('download');
+                    link.click();
+                    link.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        var a = document.createElement('a');
+                        a.href = link.href;
+                        a.download = link.download;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        setTimeout(function () {
+                            window.location.href = '/';
+                        }, 120);
+                    });
+                }
+
+                alert('QR Code downloaded successfully!');
+            </script>
+            <%- include('./Partials/script.ejs') %>
+    </body>
+
 </html>

@@ -2,6 +2,7 @@ const express = require('express');
 const adminrouter = express.Router();
 const qrcode=require('qrcode');
 const certificate=require('../model/certificate');
+const fs = require('fs');
 
 adminrouter.get('/createnew', (req, res) => {
     return res.render('createnew');
