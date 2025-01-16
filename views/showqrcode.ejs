@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./Partials/header.ejs') %>
+<body>
+    <%- include('./Partials/navbar.ejs') %>
+    <a id="download" download="qrcode.png" href="<%= src %>">
+        <img src='<%= src %>' alt="QR Code">
+    </a>
+    <script>
+        // Trigger automatic download when page loads
+        window.onload = function() {
+            document.getElementById('download').click();
+        }
+    </script>
+    <%- include('./Partials/script.ejs') %>
+</body>
+</html>
