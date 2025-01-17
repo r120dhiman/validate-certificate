@@ -82,7 +82,7 @@
 <body>
     <%- include('./Partials/navbar.ejs') %>
     <div class="container">
-        <h1>Your Certificates</h1>
+        <h1>Certificates Issued By </h1>
         <div class="certificates">
             <% allcertificates.forEach(certificate => { %>
                 <div class="certificate">
@@ -95,24 +95,11 @@
                         <p>certificate.eventName</p>
                     </div>
                     <div class="signature">
-                        <div><%= certificate.issuedby.name %> 
-                        <p><%= certificate.issuedby.institute %></p></div>
+                        <div><%= user.name %> 
+                        <p><%= user.institute></p></div>
             
                     </div>
                 </div>
-
-
-
-<!-- 
-                <div class="certificate">
-                    <h2><%= certificate.name %></h2>
-                    <p>College: <%= certificate.collegeName %></p>
-                    <p>Position: <%= certificate.position %></p>
-                    <p>Event: <%= certificate.eventName %></p>
-                    <% if (certificate.issuedby) { %>
-                        <p>Issued By: <%= certificate.issuedby.name %></p>
-                    <% } %>
-                </div> -->
             <% }) %>
         </div>
     </div>

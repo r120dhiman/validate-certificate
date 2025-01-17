@@ -29,7 +29,7 @@ app.get('/', async(req, res) => {
     return res.redirect('/user/signin');
 }
 const allcertificates=await certificate.find({issuedby: req.user._id});
-  return res.render('Home',{allcertificates});
+  return res.render('Home',{allcertificates, user:req.user});
 });
 app.get('/logout', (req, res) => {
   res.clearCookie('token');
