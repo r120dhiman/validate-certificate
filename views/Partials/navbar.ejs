@@ -3,6 +3,15 @@
       <a class="navbar-brand" href="/">
        <h2>Validate Your certificate</h2>
       </a>
-      <a href="/admin/createnew"><button type="button" class="btn btn-light">Add Certificate</button></a>
+      <% if (locals.user) { %>
+       <%= user.name %>
+       <a href="/logout"><button type="button" class="btn btn-light">Logout</button></a>
+       <a href="/admin/createnew"><button type="button" class="btn btn-light">Add Certificate</button></a>
+      <% } %>
+    <% if (!locals.user) { %>
+      <a href="/user/signup"><button type="button" class="btn btn-light">Sign Up</button></a>
+      <a href="/user/signin"><button type="button" class="btn btn-light">Sign In</button></a>
+    <% } %>
+  
     </div>
   </nav>
