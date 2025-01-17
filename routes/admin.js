@@ -17,10 +17,11 @@ adminrouter.post('/createnew', async (req, res) => {
         name,
         collegeName,
         position,
-        eventName});
-
+        eventName,
+        issuedby:req.user._id});
     const newid=newuser._id;
     const url=`https://validate-certificate-1zy7.onrender.com/validate/${newid}`;
+    // const url=`http://localhost:3000/validate/${newid}`;
     try {
         const src = await qrcode.toDataURL(url);
         return res.render('showqrcode',{src});

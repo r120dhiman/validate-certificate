@@ -20,11 +20,11 @@ const userschema = new mongoose.Schema({
         required: true
     },
     password: {
-        type: String
+        type: String,
+        required: true
     },
     salt: {
         type: String,
-        // required: true
     },
     role: {
         type: String,

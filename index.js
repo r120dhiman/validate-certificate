@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const validaterouter = require('./routes/validate');
 const { connection } = require('./connections/bdconnection');
+const certificate = require('./model/certificate');
 const adminrouter = require('./routes/admin');
 const userrouter = require('./routes/user');
 const CookieParser = require('cookie-parser');
@@ -23,8 +24,12 @@ app.use((req, res, next) => {
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
-app.get('/', (req, res) => {
-  return res.render('Home',);
+app.get('/', async(req, res) => {
+  if (!req.user) {
+    return res.redirect('/user/signin');
+}
+const allcertificates=await certificate.find({issuedby: req.user._id});
+  return res.render('Home',{allcertificates});
 });
 app.get('/logout', (req, res) => {
   res.clearCookie('token');
