@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <%- include('./Partials/header.ejs') %>
+
+<head>
+    <%- include('./Partials/header.ejs') %>
         <link rel="stylesheet" href="./CSS/home.css">
         <title>Verify Your Certificate</title>
         <style>
@@ -11,6 +12,7 @@
                 padding: 50px;
                 background-color: #f8f8f8;
             }
+
             .certificate {
                 border: 5px solid #b71c1c;
                 padding: 30px;
@@ -20,30 +22,36 @@
                 margin: 0 auto;
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             }
+
             .title {
                 font-size: 32px;
                 font-weight: bold;
             }
+
             .subtitle {
                 font-size: 20px;
                 color: #333;
             }
+
             .name {
                 font-size: 40px;
                 font-family: 'Brush Script MT', cursive;
                 font-weight: bold;
                 margin: 20px 0;
             }
+
             .description {
                 margin: 20px 0;
                 font-size: 14px;
                 color: #666;
             }
+
             .signature {
                 display: flex;
                 justify-content: space-between;
                 margin-top: 30px;
             }
+
             .signature div {
                 width: 30%;
                 text-align: center;
@@ -51,6 +59,7 @@
                 padding-top: 10px;
                 font-weight: bold;
             }
+
             .ribbon {
                 position: relative;
                 width: 80px;
@@ -59,50 +68,67 @@
                 border-radius: 50%;
                 margin: 0 auto 20px;
             }
-            .ribbon:before, .ribbon:after {
+
+            .ribbon:before,
+            .ribbon:after {
                 content: '';
                 position: absolute;
                 width: 20px;
                 height: 60px;
                 background-color: #c62828;
             }
+
             .ribbon:before {
                 transform: rotate(-20deg);
                 top: 50%;
                 left: -10px;
             }
+
             .ribbon:after {
                 transform: rotate(20deg);
                 top: 50%;
                 right: -10px;
             }
         </style>
-    </head>
+</head>
 
 <body>
     <%- include('./Partials/navbar.ejs') %>
-    <div class="container">
-        <h1>Certificates Issued By </h1>
-        <div class="certificates">
-            <% allcertificates.forEach(certificate => { %>
-                <div class="certificate">
-                    <div class="title">CERTIFICATE</div>
-                    <p>This Certificate is Presented to:</p>
-                    <div class="name"><%= certificate.name %> of</div>
-                    <div class="description">
-                        <p><%= certificate.collegeName %></p>
-                        <p>for participation in</p>
-                        <p>certificate.eventName</p>
-                    </div>
-                    <div class="signature">
-                        <div><%= user.name %> 
-                        <p><%= user.institute %></p></div>
-            
-                    </div>
-                </div>
-            <% }) %>
+        <div class="container">
+            <h1>Certificates Issued By </h1>
+            <div class="certificates">
+                <% allcertificates.forEach(certificate=> { %>
+                    <a href="https://validate-certificate-1zy7.onrender.com/validate/<%= certificate._id %>">
+                        <div class="certificate">
+                            <div class="title">CERTIFICATE</div>
+                            <p>This Certificate is Presented to:</p>
+                            <div class="name">
+                                <%= certificate.name %> of
+                            </div>
+                            <div class="description">
+                                <p>
+                                    <%= certificate.collegeName %>
+                                </p>
+                                <p>for participation in</p>
+                                <p>
+                                    <%= certificate.eventName %>
+                                </p>
+                            </div>
+                            <div class="signature">
+                                <div>
+                                    <%= user.name %>
+                                        <p>
+                                            <%= user.institute %>
+                                        </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </a>
+                    <% }) %>
+            </div>
         </div>
-    </div>
-    <%- include('./Partials/script.ejs') %>
+        <%- include('./Partials/script.ejs') %>
 </body>
+
 </html>
