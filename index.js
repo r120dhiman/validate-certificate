@@ -28,9 +28,14 @@ app.set('views', 'views');
 app.get('/', async(req, res) => {
   if (!req.user) {
     return res.redirect('/user/signin');
-}
-const allcertificates=await certificate.find({issuedby: req.user._id});
-  return res.render('Home',{allcertificates, user:req.user});
+  }
+  if(req.user.role === 'BOSS'){
+    const allcertificates = await certificate.find();
+    const alluser = await User.find();
+    return res.render('Home', {allcertificates, alluser, user: req.user});
+  }
+  const allcertificates = await certificate.find({issuedby: req.user._id});
+  return res.render('Home', {allcertificates, user: req.user});
 });
 app.get('/logout', (req, res) => {
   res.clearCookie('token');

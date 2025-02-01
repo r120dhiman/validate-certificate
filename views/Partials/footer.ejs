@@ -11,7 +11,7 @@
                 <h4 class="footer-subtitle">Quick Links</h4>
                 <ul class="footer-links">
                     <li><a href="/">Home</a></li>
-                    <% if (user) { %>
+                    <% if (user && user.role !== 'BOSS') { %>
                       <li><a href="/admin/createnew">Create Certificate</a></li>
                     <% } %>
                     <% if (!user) { %>
