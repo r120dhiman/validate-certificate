@@ -6,6 +6,7 @@ const certificate = require('./model/certificate');
 const adminrouter = require('./routes/admin');
 const userrouter = require('./routes/user');
 const CookieParser = require('cookie-parser');
+const User = require('./model/user');
 const { checkforcookie } = require('./middleware/auth');
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -35,9 +36,13 @@ app.get('/logout', (req, res) => {
   res.clearCookie('token');
   res.redirect('/');
 });
+app.get('/privacy-policy', (req, res) => {
+  res.render('privacy-policy');
+});
 app.use('/admin',adminrouter);
 app.use('/user',userrouter);
 app.use('/validate',validaterouter);
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

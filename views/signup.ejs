@@ -2,41 +2,402 @@
 <html lang="en">
     <head>
         <%- include('./Partials/header.ejs') %>
-        <link rel="stylesheet" href="./CSS/home.css">
-        <title>Sign In</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <title>Sign Up - Certificate Validator</title>
+        <style>
+            :root {
+                --primary-color: #4f46e5;
+                --primary-light: #818cf8;
+                --secondary-color: #10b981;
+                --accent-color: #f43f5e;
+                --background-color: #f8fafc;
+                --text-color: #1e293b;
+                --border-radius: 16px;
+                --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            }
+
+            body {
+                font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+                background: linear-gradient(135deg, var(--background-color) 0%, #eef2ff 100%);
+                color: var(--text-color);
+                line-height: 1.6;
+                min-height: 100vh;
+                margin: 0;
+                padding: 0;
+            }
+
+            .auth-container {
+                max-width: 400px;
+                margin: 4rem auto;
+                padding: 0 1.5rem;
+            }
+
+            .auth-card {
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.5);
+                border-radius: var(--border-radius);
+                padding: 2rem;
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+                animation: slideUp 0.5s ease-out;
+            }
+
+            .auth-header {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+
+            .auth-title {
+                font-size: 1.8rem;
+                background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+                letter-spacing: -0.025em;
+            }
+
+            .auth-subtitle {
+                color: #64748b;
+                font-size: 1rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .form-label {
+                display: block;
+                color: var(--text-color);
+                font-weight: 500;
+                margin-bottom: 0.5rem;
+                font-size: 0.95rem;
+            }
+
+            .form-input {
+                width: 100%;
+                padding: 0.75rem 1rem;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                font-size: 1rem;
+                color: var(--text-color);
+                background: white;
+                transition: all 0.3s ease;
+            }
+
+            .form-input:focus {
+                outline: none;
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            }
+
+            .form-input::placeholder {
+                color: #94a3b8;
+            }
+
+            .submit-btn {
+                width: 100%;
+                padding: 0.75rem 1.5rem;
+                background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-weight: 600;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .submit-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
+
+            .submit-btn:active {
+                transform: translateY(0);
+            }
+
+            .auth-footer {
+                text-align: center;
+                margin-top: 1.5rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid #e2e8f0;
+            }
+
+            .auth-footer p {
+                color: #64748b;
+                font-size: 0.95rem;
+                margin: 0;
+            }
+
+            .auth-link {
+                color: var(--primary-color);
+                text-decoration: none;
+                font-weight: 500;
+                margin-left: 0.25rem;
+                transition: color 0.3s ease;
+            }
+
+            .auth-link:hover {
+                color: var(--primary-light);
+            }
+
+            .form-hint {
+                font-size: 0.875rem;
+                color: #64748b;
+                margin-top: 0.25rem;
+            }
+
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @media (max-width: 768px) {
+                .auth-container {
+                    margin: 2rem auto;
+                    padding: 0 1rem;
+                }
+
+                .auth-card {
+                    padding: 1.5rem;
+                }
+
+                .auth-title {
+                    font-size: 1.5rem;
+                }
+            }
+
+            .form-check {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: #64748b;
+                font-size: 0.95rem;
+            }
+
+            .form-check-input {
+                width: 1rem;
+                height: 1rem;
+                border: 1px solid #e2e8f0;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            .form-check-input:checked {
+                background-color: var(--primary-color);
+                border-color: var(--primary-color);
+            }
+
+            .form-check-label {
+                cursor: pointer;
+            }
+
+            .password-strength {
+                height: 4px;
+                border-radius: 2px;
+                margin-top: 0.5rem;
+                transition: all 0.3s ease;
+            }
+
+            .password-strength.weak {
+                background: var(--accent-color);
+                width: 33.33%;
+            }
+
+            .password-strength.medium {
+                background: #eab308;
+                width: 66.66%;
+            }
+
+            .password-strength.strong {
+                background: var(--secondary-color);
+                width: 100%;
+            }
+
+            .form-input.invalid {
+                border-color: var(--accent-color);
+            }
+
+            .form-hint.error {
+                color: var(--accent-color);
+            }
+
+            .form-hint.success {
+                color: var(--secondary-color);
+            }
+
+            .form-input.success {
+                border-color: var(--secondary-color);
+            }
+
+            .error-message {
+                background: rgba(244, 63, 94, 0.1);
+                border: 1px solid rgba(244, 63, 94, 0.2);
+                border-radius: var(--border-radius);
+                padding: 1rem 1.5rem;
+                margin: 1rem auto;
+                max-width: 400px;
+                text-align: center;
+                animation: slideDown 0.5s ease-out;
+            }
+
+            .error-message p {
+                color: var(--accent-color);
+                font-size: 0.95rem;
+                font-weight: 500;
+                margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            .error-message p::before {
+                content: '⚠️';
+                font-size: 1.1rem;
+            }
+
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
     </head>
 
 <body>
     <%- include('./Partials/navbar.ejs') %>
-<div class="container">
-    <form action="/user/signup" method="POST">
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Enter Your Name</label>
-          <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp">
+<% if (locals.error) { %>
+<div class="error-message">
+    <p><%= error %></p>
+</div>
+<% } %>
+<div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1 class="auth-title">Create Account</h1>
+                <p class="auth-subtitle">Join us to start issuing certificates</p>
+            </div>
+
+            <form action="/user/signup" method="POST" id="signupForm" onsubmit="return validateForm()">
+                <div class="form-group">
+                    <label class="form-label" for="name">Full Name</label>
+                    <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="institute">Institute Name</label>
+                    <input type="text" id="institute" name="institute" class="form-input" placeholder="Enter your institute name" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="desigination">Designation / Issued By</label>
+                    <input type="text" id="desigination" name="desigination" class="form-input" placeholder="Enter your designation" required>
+                    <p class="form-hint">Your role or position in the institute</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Create a password" 
+                           required minlength="8" oninput="validatePassword(this)">
+                    <div class="password-strength" id="passwordStrength"></div>
+                    <p class="form-hint" id="passwordHint">Password must be at least 8 characters long</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-check">
+                        <input type="checkbox" required class="form-check-input">
+                        <span class="form-check-label">I agree to the terms and conditions</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">Create Account</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account?<a href="/user/signin" class="auth-link">Sign in</a></p>
+            </div>
         </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Enter Your Institute Name</label>
-          <input type="text" class="form-control" id="name" name="institute" aria-describedby="emailHelp">
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Enter Your Desigination or Issued By</label>
-          <input type="text" class="form-control" id="name" name="desigination" aria-describedby="emailHelp">
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp">
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" name="password" id="exampleInputPassword1">
-        </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">I agree to the terms and conidtions</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
     </div>
+
+    <script>
+        function validatePassword(input) {
+            const password = input.value;
+            const strengthIndicator = document.getElementById('passwordStrength');
+            const hint = document.getElementById('passwordHint');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // Remove previous classes
+            strengthIndicator.className = 'password-strength';
+            hint.className = 'form-hint';
+            input.className = 'form-input';
+
+            if (password.length === 0) {
+                strengthIndicator.style.width = '0';
+                hint.textContent = 'Password must be at least 8 characters long';
+                return false;
+            }
+
+            if (password.length < 8) {
+                strengthIndicator.classList.add('weak');
+                hint.classList.add('error');
+                hint.textContent = 'Password is too short (minimum 8 characters)';
+                input.classList.add('invalid');
+                submitBtn.disabled = true;
+                return false;
+            }
+
+            // Check password strength
+            let strength = 0;
+            if (password.match(/[a-z]/)) strength++;
+            if (password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/)) strength++;
+            if (password.match(/[^a-zA-Z0-9]/)) strength++;
+
+            if (strength <= 2) {
+                strengthIndicator.classList.add('weak');
+                hint.textContent = 'Weak password';
+            } else if (strength === 3) {
+                strengthIndicator.classList.add('medium');
+                hint.textContent = 'Medium strength password';
+            } else {
+                strengthIndicator.classList.add('strong');
+                hint.textContent = 'Strong password';
+            }
+
+            submitBtn.disabled = false;
+            return true;
+        }
+
+        function validateForm() {
+            const password = document.getElementById('password').value;
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long');
+                return false;
+            }
+            return true;
+        }
+    </script>
+
     <%- include('./Partials/script.ejs') %>
+    <%- include('./Partials/footer.ejs') %>
 </body>
 </html>

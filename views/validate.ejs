@@ -1,112 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate of Completion</title>
+    <%- include('./Partials/header.ejs') %>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Certificate Validation</title>
     <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary-color: #10b981;
+            --accent-color: #f43f5e;
+            --background-color: #f8fafc;
+            --text-color: #1e293b;
+            --border-radius: 16px;
+            --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--background-color) 0%, #eef2ff 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .validation-status {
+            background: linear-gradient(135deg, #dcfce7 0%, #d1fae5 100%);
+            color: #065f46;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin: 2rem auto;
+            max-width: 600px;
             text-align: center;
-            padding: 50px;
-            background-color: #f8f8f8;
-        }
-        .certificate {
-            border: 5px solid #b71c1c;
-            padding: 40px;
-            border-radius: 10px;
-            background: #fff;
-            width: 80%;
-            margin: 0 auto;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .title {
-            font-size: 36px;
-            font-weight: bold;
-        }
-        .subtitle {
-            font-size: 24px;
-            color: #333;
-        }
-        .name {
-            font-size: 48px;
-            font-family: 'Brush Script MT', cursive;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-        .description {
-            margin: 20px 0;
-            font-size: 16px;
-            color: #666;
-        }
-        .signature {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-        }
-        .signature div {
-            width: 30%;
-            text-align: center;
-            border-top: 1px solid #333;
-            padding-top: 10px;
-            font-weight: bold;
-        }
-        .ribbon {
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(167, 243, 208, 0.5);
             position: relative;
-            width: 100px;
-            height: 100px;
-            background-color: #c62828;
-            border-radius: 50%;
-            margin: 0 auto 20px;
+            overflow: hidden;
+            animation: slideDown 0.5s ease-out;
         }
-        .ribbon:before, .ribbon:after {
+
+        .validation-status h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .validation-status h1::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: #059669;
+            color: white;
+            border-radius: 50%;
+            font-size: 1.2rem;
+        }
+
+        .certificate-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .certificate {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .certificate::before {
             content: '';
             position: absolute;
-            width: 30px;
-            height: 80px;
-            background-color: #c62828;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
         }
-        .ribbon:before {
-            transform: rotate(-20deg);
-            top: 50%;
-            left: -15px;
+
+        .certificate::after {
+            content: '';
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            opacity: 0.1;
+            border-radius: 50%;
+            z-index: 0;
         }
-        .ribbon:after {
-            transform: rotate(20deg);
-            top: 50%;
-            right: -15px;
+
+        .title {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: -0.025em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .name {
+            font-size: 3rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 1.5rem 0;
+            text-align: center;
+            letter-spacing: -0.025em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .description {
+            text-align: center;
+            color: #64748b;
+            font-size: 1.2rem;
+            margin: 2rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .description p {
+            margin: 0.75rem 0;
+        }
+
+        .description p strong {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .signature {
+            margin-top: 3rem;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 2px solid #e2e8f0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .signature img {
+            max-width: 150px;
+            margin-bottom: 1rem;
+            filter: contrast(1.2);
+        }
+
+        .signature p {
+            color: #64748b;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 0.5rem 0;
+        }
+
+        .issuer-info {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .issuer-info h2 {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .issuer-info h3 {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            margin: 0.75rem 0;
+            font-weight: 500;
+        }
+
+        .disclaimer {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            color: #991b1b;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin: 2rem auto;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(254, 202, 202, 0.5);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            animation: slideUp 0.5s ease-out 0.2s backwards;
+        }
+
+        .disclaimer strong {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .certificate {
+                padding: 2rem 1.5rem;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .name {
+                font-size: 2.2rem;
+            }
+
+            .description {
+                font-size: 1.1rem;
+            }
+
+            .validation-status h1 {
+                font-size: 1.5rem;
+            }
+
+            .certificate::after {
+                width: 100px;
+                height: 100px;
+                bottom: 1rem;
+                right: 1rem;
+            }
         }
     </style>
 </head>
-<body><nav class="navbar bg-body-tertiary">
-    <div class="container">
-      <a class="navbar-brand" href="/">
-       <h2>Validate Your certificate</h2>
-      </a>
-    </div>
-  </nav>
-    <h1 style="color: #4caf50; font-size: 24px; margin-bottom: 20px; margin: auto;">This is a Valid Certificate</h1>
-    <div class="certificate">
-        <div class="title">CERTIFICATE</div>
-        <p>This Certificate is Presented to:</p>
-        <div class="name"><%= data.name %></div>
-        <p>of</p>
-        <div class="description">
-            <p><%= data.collegeName %></p>
-            <p>for participation in</p>
-            <p><%= data.eventName %></p>
-        </div>
-        <div class="signature">
-            <div>Rohit</div>
+<body>
+    <%- include('./Partials/navbar.ejs') %>
 
+    <div class="validation-status">
+        <h1>This Certificate is Valid</h1>
+    </div>
+
+    <div class="certificate-container">
+        <div class="certificate">
+            <div class="title">CERTIFICATE OF ACHIEVEMENT</div>
+            <p class="recipient-label">This Certificate is Proudly Presented to:</p>
+            <div class="name"><%= data.name %></div>
+            <div class="description">
+                <p>from <strong><%= data.collegeName %></strong></p>
+                <p>for successfully participating in</p>
+                <p><strong><%= data.eventName %></strong></p>
+            </div>
+        </div>
+
+        <div class="issuer-info">
+            <h2>Certificate Issued By</h2>
+            <h3><%= data.issuedby.name %></h3>
+            <h3><%= data.issuedby.desigination %></h3>
+            <h3><%= data.issuedby.institute %></h3>
+        </div>
+
+        <div class="disclaimer">
+            <p><strong>Important Notice:</strong> This is a digital certificate for verification purposes only. 
+            The printed version of this page cannot be used as an official certificate. 
+            Please use the original certificate for official purposes.</p>
         </div>
     </div>
-    <h2>Issued By</h2>
-    <h3><%= data.issuedby.name %></h3>
-    <h3><%= data.issuedby.desigination %></h3>
-    <h3><%= data.issuedby.institute %></h3>
-    <p style="font-size: 14px; color: #ff0000; margin-top: 20px;">
-        This is a digital certificate only for verification and <strong>Print</strong> of this cannot be used as certificate. Please use original certificate wherever needed.
-    </p>
+
+    <%- include('./Partials/script.ejs') %>
+    <%- include('./Partials/footer.ejs') %>
 </body>
 </html>

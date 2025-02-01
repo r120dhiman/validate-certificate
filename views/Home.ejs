@@ -3,134 +3,315 @@
 
 <head>
     <%- include('./Partials/header.ejs') %>
-        <link rel="stylesheet" href="./CSS/home.css">
-        <title>Verify Your Certificate</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                text-align: center;
-                padding: 50px;
-                background-color: #f8f8f8;
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Certificate Validation System</title>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary-color: #10b981;
+            --accent-color: #f43f5e;
+            --background-color: #f8fafc;
+            --text-color: #1e293b;
+            --border-radius: 16px;
+            --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--background-color) 0%, #eef2ff 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: linear-gradient(rgba(79, 70, 229, 0.1) 0%, transparent 100%);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .hero p {
+            color: #64748b;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            animation: fadeIn 0.5s ease-out 0.2s backwards;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin: 2rem 0;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: -0.025em;
+        }
+
+        .certificates {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .certificate-link {
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease;
+            display: block;
+        }
+
+        .certificate-link:hover {
+            transform: translateY(-8px);
+        }
+
+        .certificate {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .certificate:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .certificate-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            letter-spacing: -0.025em;
+        }
+
+        .recipient-label {
+            color: #64748b;
+            font-size: 1rem;
+            margin: 1rem 0 0.5rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .name {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin: 1rem 0;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: -0.025em;
+        }
+
+        .description {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .description p {
+            margin: 0.5rem 0;
+            color: #64748b;
+        }
+
+        .event-label {
+            font-size: 1rem;
+            color: #64748b;
+            margin: 0.5rem 0;
+            font-weight: 500;
+        }
+
+        .event-name {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+
+        .signature {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .issuer {
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .institute {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 0.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: #64748b;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .empty-state h2 {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            margin-bottom: 2rem;
+        }
+
+        .create-btn {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .create-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 3rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .certificates {
+                grid-template-columns: 1fr;
+                padding: 0.5rem;
             }
 
             .certificate {
-                border: 5px solid #b71c1c;
-                padding: 30px;
-                border-radius: 10px;
-                background: #fff;
-                width: 60%;
-                margin: 0 auto;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                text-decoration: none;
+                padding: 1.5rem;
             }
 
             .title {
-                font-size: 32px;
-                font-weight: bold;
-            }
-
-            .subtitle {
-                font-size: 20px;
-                color: #333;
+                font-size: 1.3rem;
             }
 
             .name {
-                font-size: 40px;
-                font-family: 'Brush Script MT', cursive;
-                font-weight: bold;
-                margin: 20px 0;
+                font-size: 1.5rem;
             }
-
-            .description {
-                margin: 20px 0;
-                font-size: 14px;
-                color: #666;
-            }
-
-            .signature {
-                display: flex;
-                justify-content: space-between;
-                margin-top: 30px;
-            }
-
-            .signature div {
-                width: 30%;
-                text-align: center;
-                border-top: 1px solid #333;
-                padding-top: 10px;
-                font-weight: bold;
-            }
-
-            .ribbon {
-                position: relative;
-                width: 80px;
-                height: 80px;
-                background-color: #c62828;
-                border-radius: 50%;
-                margin: 0 auto 20px;
-            }
-
-            .ribbon:before,
-            .ribbon:after {
-                content: '';
-                position: absolute;
-                width: 20px;
-                height: 60px;
-                background-color: #c62828;
-            }
-
-            .ribbon:before {
-                transform: rotate(-20deg);
-                top: 50%;
-                left: -10px;
-            }
-
-            .ribbon:after {
-                transform: rotate(20deg);
-                top: 50%;
-                right: -10px;
-            }
-        </style>
+        }
+    </style>
 </head>
 
 <body>
     <%- include('./Partials/navbar.ejs') %>
-        <div class="container">
-            <h1>Certificates Issued By </h1>
-            <div class="certificates">
-                <% allcertificates.forEach(certificate=> { %>
-                    <a href="https://validate-certificate-1zy7.onrender.com/validate/<%= certificate._id %>">
-                        <div class="certificate">
-                            <div class="title">CERTIFICATE</div>
-                            <p>This Certificate is Presented to:</p>
-                            <div class="name">
-                                <%= certificate.name %> 
-                            </div>
-                            <p>of</p>
-                            <div class="description">
-                                <p>
-                                    <%= certificate.collegeName %>
-                                </p>
-                                <p>for participation in</p>
-                                <p>
-                                    <%= certificate.eventName %>
-                                </p>
-                            </div>
-                            <div class="signature">
-                                <div>
-                                    <%= user.name %>
-                                        <p>
-                                            <%= user.institute %>
-                                        </p>
-                                </div>
 
+    <div class="hero">
+        <h1>Certificate Validation System</h1>
+        <p>Securely manage and verify digital certificates with ease. Create, validate, and track all your certificates in one place.</p>
+    </div>
+
+    <div class="container">
+        <% if (allcertificates && allcertificates.length > 0) { %>
+            <h2 class="section-title">Your Issued Certificates</h2>
+            <div class="certificates">
+                <% allcertificates.forEach(certificate => { %>
+                    <a href="/validate/<%= certificate._id %>" class="certificate-link">
+                        <div class="certificate">
+                            <div class="certificate-content">
+                                <div class="title">CERTIFICATE OF ACHIEVEMENT</div>
+                                <p class="recipient-label">Awarded to:</p>
+                                <div class="name"><%= certificate.name %></div>
+                                <div class="description">
+                                    <p class="institute"><%= certificate.collegeName %></p>
+                                    <p class="event-label">For Excellence in</p>
+                                    <p class="event-name"><%= certificate.eventName %></p>
+                                </div>
+                                <div class="signature">
+                                    <div class="issuer">
+                                        <%= user.name %>
+                                        <p class="institute"><%= user.institute %></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </a>
-                    <% }) %>
+                <% }) %>
             </div>
-        </div>
-        <%- include('./Partials/script.ejs') %>
+        <% } else { %>
+            <div class="empty-state">
+                <h2>No Certificates Yet</h2>
+                <p>Start by creating your first digital certificate.</p>
+                <a href="/certificate/new" class="create-btn">Create Certificate</a>
+            </div>
+        <% } %>
+    </div>
+
+    <%- include('./Partials/script.ejs') %>
+    <%- include('./Partials/footer.ejs') %>
 </body>
 
 </html>

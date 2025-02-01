@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./Partials/header.ejs') %>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Privacy Policy - Certificate Validator</title>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary-color: #10b981;
+            --accent-color: #f43f5e;
+            --background-color: #f8fafc;
+            --text-color: #1e293b;
+            --border-radius: 16px;
+            --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--background-color) 0%, #eef2ff 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .privacy-container {
+            max-width: 800px;
+            margin: 2rem auto 4rem;
+            padding: 0 1.5rem;
+        }
+
+        .privacy-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        .privacy-title {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .privacy-subtitle {
+            color: #64748b;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .privacy-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .section-content {
+            color: #475569;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .section-content p {
+            margin-bottom: 1rem;
+        }
+
+        .section-content ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: linear-gradient(to right, rgba(79, 70, 229, 0.1), rgba(16, 185, 129, 0.1));
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .highlight p {
+            margin: 0;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .contact-info {
+            background: rgba(79, 70, 229, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .contact-info p {
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .contact-info a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: var(--primary-light);
+        }
+
+        @media (max-width: 768px) {
+            .privacy-container {
+                margin: 1rem auto 3rem;
+            }
+
+            .privacy-title {
+                font-size: 2rem;
+            }
+
+            .privacy-card {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <%- include('./Partials/navbar.ejs') %>
+
+    <div class="privacy-container">
+        <div class="privacy-header">
+            <h1 class="privacy-title">Privacy Policy</h1>
+            <p class="privacy-subtitle">Last updated: <%= new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %></p>
+        </div>
+
+        <div class="privacy-card">
+            <div class="section">
+                <h2 class="section-title">Introduction</h2>
+                <div class="section-content">
+                    <p>Welcome to Certificate Validator. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you about how we look after your personal data when you visit our website and tell you about your privacy rights and how the law protects you.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Information We Collect</h2>
+                <div class="section-content">
+                    <p>We collect and process the following information:</p>
+                    <ul>
+                        <li>Full name</li>
+                        <li>Email address</li>
+                        <li>Institution name</li>
+                        <li>Professional designation</li>
+                        <li>Certificate data and metadata</li>
+                        <li>Usage data and analytics</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">How We Use Your Information</h2>
+                <div class="section-content">
+                    <p>We use your personal information to:</p>
+                    <ul>
+                        <li>Create and manage your account</li>
+                        <li>Generate and validate digital certificates</li>
+                        <li>Provide customer support</li>
+                        <li>Send important updates about our services</li>
+                        <li>Improve our platform and user experience</li>
+                        <li>Comply with legal obligations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Data Security</h2>
+                <div class="section-content">
+                    <p>We implement appropriate security measures to protect your personal information, including:</p>
+                    <ul>
+                        <li>Encryption of data in transit and at rest</li>
+                        <li>Regular security assessments and updates</li>
+                        <li>Access controls and authentication measures</li>
+                        <li>Secure data backup and recovery procedures</li>
+                    </ul>
+                    <div class="highlight">
+                        <p>We never share your personal information with third parties without your explicit consent, except when required by law.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Your Rights</h2>
+                <div class="section-content">
+                    <p>You have the right to:</p>
+                    <ul>
+                        <li>Access your personal data</li>
+                        <li>Correct inaccurate data</li>
+                        <li>Request deletion of your data</li>
+                        <li>Object to processing of your data</li>
+                        <li>Request data portability</li>
+                        <li>Withdraw consent at any time</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Cookies</h2>
+                <div class="section-content">
+                    <p>We use cookies and similar tracking technologies to track activity on our website and hold certain information. Cookies are files with small amount of data which may include an anonymous unique identifier.</p>
+                    <p>You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our service.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Changes to This Policy</h2>
+                <div class="section-content">
+                    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date at the top of this policy.</p>
+                    <div class="contact-info">
+                        <p>For any questions about this Privacy Policy, please contact us at: <a href="mailto:r120dhiman+validate@gmail.com">support@certificatevalidator.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('./Partials/footer.ejs') %>
+    <%- include('./Partials/script.ejs') %>
+</body>
+</html> 
