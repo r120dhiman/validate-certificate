@@ -9,6 +9,8 @@ const CookieParser = require('cookie-parser');
 const User = require('./model/user');
 const { checkforcookie } = require('./middleware/auth');
 const PORT = process.env.PORT || 3000;
+const bodyParser=require('body-parser');
+const { transporter } = require('./services/automail');
 const app = express();
 //DB connection
 connection(process.env.MONGOURL);
@@ -17,11 +19,17 @@ connection(process.env.MONGOURL);
 //middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(CookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(checkforcookie('token'));
 app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 });
+
+
+
+
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -41,6 +49,31 @@ app.get('/logout', (req, res) => {
   res.clearCookie('token');
   res.redirect('/');
 });
+
+app.get('/send-email', (req, res) => {
+  return res.render('Sendmail')
+}
+)
+
+app.post('/send-email', (req, res) => {
+  const { email, subject, message } = req.body;
+  const mailOptions = {
+    from: process.env.EMAIL,      // Sender's email
+    to: email,       // Recipient's email
+    subject: subject,                  // Subject of the email
+    text: message,                     // Email body
+};
+transporter.sendMail(mailOptions, (error, info)=>{
+  if (error) {
+    return res.status(500).send('Error occurred: ' + error);
+}
+
+res.send('Email sent: ' + info.response).redirect('/');
+})
+
+});
+
+
 app.get('/privacy-policy', (req, res) => {
   res.render('privacy-policy');
 });

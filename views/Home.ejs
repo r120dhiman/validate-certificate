@@ -443,9 +443,13 @@
                                     <p class="recipient-label">Awarded to:</p>
                                     <div class="name"><%= certificate.name %></div>
                                     <div class="description">
-                                        <p class="institute"><%= certificate.collegeName %></p>
-                                        <p class="event-label">For Excellence in</p>
-                                        <p class="event-name"><%= certificate.eventName %></p>
+                                        <p>from <strong><%= certificate.collegeName %></strong></p>
+                                        <% if (certificate.position !== "NA") { %>
+                                            <p>For securing <%= certificate.position %> in</p>
+                                        <% } else { %> 
+                                            <p>for successfully participating in</p>
+                                        <% } %>
+                                        <p><strong><%= certificate.eventName %></strong></p>
                                     </div>
                                     <div class="signature">
                                         <div class="issuer">
@@ -540,9 +544,13 @@
                                     <p class="recipient-label">Awarded to:</p>
                                     <div class="name"><%= certificate.name %></div>
                                     <div class="description">
-                                        <p class="institute"><%= certificate.collegeName %></p>
-                                        <p class="event-label">For Excellence in</p>
-                                        <p class="event-name"><%= certificate.eventName %></p>
+                                        <p>from <strong><%= certificate.collegeName %></strong></p>
+                                        <% if (certificate.position !== "NA") { %>
+                                            <p>For securing <%= certificate.position %> in</p>
+                                        <% } else { %> 
+                                            <p>for successfully participating in</p>
+                                        <% } %>
+                                        <p><strong><%= certificate.eventName %></strong></p>
                                     </div>
                                     <div class="signature">
                                         <div class="issuer">

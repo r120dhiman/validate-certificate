@@ -292,11 +292,15 @@
     <div class="certificate-container">
         <div class="certificate">
             <div class="title">CERTIFICATE OF ACHIEVEMENT</div>
-            <p class="recipient-label">This Certificate is Proudly Presented to:</p>
+            <p class="recipient-label" style="text-align: center;">This Certificate is Proudly Presented to:</p>
             <div class="name"><%= data.name %></div>
             <div class="description">
                 <p>from <strong><%= data.collegeName %></strong></p>
-                <p>for successfully participating in</p>
+                <% if (data.position !== "NA") { %>
+                    <p>For securing <%= data.position %> in</p>
+                <% } else { %> 
+                    <p>for successfully participating in</p>
+                <% } %>
                 <p><strong><%= data.eventName %></strong></p>
             </div>
         </div>
